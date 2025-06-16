@@ -47,4 +47,4 @@ Create a new account by sending a POST request to `/register` (or `/users`) with
 
 ## Frontend
 
-Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the registration page to create an account. Once logged in you land on `campaigns.html` which lists the campaigns where you are the DM or a player. Clicking a campaign opens `notes.html` showing only the notes for that campaign. All pages include a theme toggle for light or dark mode and the layout uses colorful rounded panels.
+Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the registration page to create an account. Once logged in you land on `campaigns.html` which lists the campaigns where you are the DM or a player. Clicking a campaign opens `notes.html` showing only the notes for that campaign. All pages include a theme toggle for light or dark mode and the layout uses colorful rounded panels. The notes screen defaults the session date to today and note titles are clickable so you can edit them easily.
