@@ -23,4 +23,4 @@ Once the environment is created, you can start the service using
 
 ## Frontend
 
-Open `frontend/login.html` in your browser after starting the backend. The login page will authenticate a user and redirect to `notes.html` where you can create campaigns and notes. Both pages include a theme toggle for light or dark mode.
+Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the new registration page to create an account. After logging in you will be redirected to `notes.html` where you can create campaigns and notes. All pages include a theme toggle for light or dark mode.
