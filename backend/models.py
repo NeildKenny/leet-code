@@ -29,6 +29,9 @@ class User(Base):
     campaigns = relationship(
         "Campaign", secondary=campaign_members, back_populates="members"
     )
+    dm_campaigns = relationship(
+        "Campaign", back_populates="dm", foreign_keys="Campaign.dm_id"
+    )
     notes = relationship("Note", back_populates="author")
 
 
@@ -40,7 +43,9 @@ class Campaign(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(Text)
+    dm_id = Column(Integer, ForeignKey("users.id"))
 
+    dm = relationship("User", back_populates="dm_campaigns", foreign_keys=[dm_id])
     members = relationship(
         "User", secondary=campaign_members, back_populates="campaigns"
     )

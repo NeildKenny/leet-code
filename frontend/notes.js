@@ -13,6 +13,17 @@ function ensureLogin() {
   return userId;
 }
 
+function getCampaignId() {
+  const params = new URLSearchParams(window.location.search);
+  const cid = params.get('campaign_id') || sessionStorage.getItem('campaign_id');
+  if (cid) {
+    sessionStorage.setItem('campaign_id', cid);
+  } else {
+    window.location.href = 'campaigns.html';
+  }
+  return cid;
+}
+
 function toggleTheme() {
   const body = document.body;
   body.classList.toggle('dark');
@@ -21,25 +32,11 @@ function toggleTheme() {
 
 document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
 
-async function createUser() {
-  const username = document.getElementById('user-name').value;
-  const password = document.getElementById('user-password').value;
-  const picture = document.getElementById('user-picture').value;
-  const params = new URLSearchParams({username, password});
-  if (picture) params.append('profile_picture_url', picture);
-  const response = await fetch(`${apiUrl}/users`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: params
-  });
-  const data = await response.json();
-  log(JSON.stringify(data, null, 2));
-}
-
 async function createCampaign() {
   const name = document.getElementById('campaign-name').value;
   const description = document.getElementById('campaign-description').value;
-  const params = new URLSearchParams({name});
+  const userId = ensureLogin();
+  const params = new URLSearchParams({name, dm_id: userId});
   if (description) params.append('description', description);
   const response = await fetch(`${apiUrl}/campaigns`, {
     method: 'POST',
@@ -51,8 +48,8 @@ async function createCampaign() {
 }
 
 async function createNote() {
-  const campaign_id = document.getElementById('note-campaign').value;
-  const author_id = document.getElementById('note-author').value;
+  const campaign_id = getCampaignId();
+  const author_id = ensureLogin();
   const title = document.getElementById('note-title').value;
   const body = document.getElementById('note-body').value;
   const image_url = document.getElementById('note-image').value;
@@ -78,7 +75,8 @@ async function createNote() {
 }
 
 async function loadNotes() {
-  const response = await fetch(`${apiUrl}/notes`);
+  const campaignId = getCampaignId();
+  const response = await fetch(`${apiUrl}/notes?campaign_id=${campaignId}`);
   const notes = await response.json();
   const list = document.getElementById('notes-list');
   list.innerHTML = '';
@@ -95,7 +93,6 @@ async function loadNotes() {
 
 ensureLogin();
 
-document.getElementById('create-user').addEventListener('click', createUser);
 document.getElementById('create-campaign').addEventListener('click', createCampaign);
 document.getElementById('create-note').addEventListener('click', createNote);
 document.getElementById('load-notes').addEventListener('click', loadNotes);

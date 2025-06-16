@@ -22,7 +22,7 @@ async function register() {
   if (response.ok) {
     const data = await response.json();
     sessionStorage.setItem('user_id', data.id);
-    window.location.href = 'notes.html';
+    window.location.href = 'campaigns.html';
   } else {
     const data = await response.json();
     alert('Registration failed: ' + (data.detail || response.status));

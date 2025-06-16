@@ -3,7 +3,7 @@
 from .db import Base, create_tables
 from .models import User, Campaign, Note
 from .views import app
-from .controllers import list_notes, authenticate_user
+from .controllers import list_notes, list_campaigns, authenticate_user
 
 __all__ = [
     "Base",
@@ -13,5 +13,6 @@ __all__ = [
     "Note",
     "app",
     "list_notes",
+    "list_campaigns",
     "authenticate_user",
 ]

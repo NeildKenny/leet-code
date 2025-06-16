@@ -20,7 +20,7 @@ async function login() {
   if (response.ok) {
     const data = await response.json();
     sessionStorage.setItem('user_id', data.id);
-    window.location.href = 'notes.html';
+    window.location.href = 'campaigns.html';
   } else {
     alert('Login failed');
   }

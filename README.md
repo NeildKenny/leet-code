@@ -1,6 +1,6 @@
 # DnD Notebook Backend
 
-This project provides a backend for a collaborative Dungeons & Dragons note taking application. It uses a simple SQLite database via SQLAlchemy and exposes an HTTP API with FastAPI. Notes can include optional images and session details while users may have profile pictures.
+This project provides a backend for a collaborative Dungeons & Dragons note taking application. It uses a simple SQLite database via SQLAlchemy and exposes an HTTP API with FastAPI. Notes can include optional images and session details while users may have profile pictures. Campaigns belong to a Dungeon Master (DM) and can have many player members. Each note references both its author and campaign.
 
 Run the server with::
 
@@ -47,4 +47,4 @@ Create a new account by sending a POST request to `/register` (or `/users`) with
 
 ## Frontend
 
-Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the registration page to create an account. After either logging in or completing registration you are taken to `notes.html` where you can create campaigns and notes. All pages include a theme toggle for light or dark mode. The interface now has a friendlier layout with rounded panels and colorful buttons.
+Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the registration page to create an account. Once logged in you land on `campaigns.html` which lists the campaigns where you are the DM or a player. Clicking a campaign opens `notes.html` showing only the notes for that campaign. All pages include a theme toggle for light or dark mode and the layout uses colorful rounded panels.

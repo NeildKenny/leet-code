@@ -68,10 +68,15 @@ def update_user(db: Session, user_id: int, **fields) -> User:
     return user
 
 
-def create_campaign(db: Session, name: str, description: str | None = None) -> Campaign:
+def create_campaign(
+    db: Session,
+    name: str,
+    description: str | None = None,
+    dm_id: int | None = None,
+) -> Campaign:
     """Create and persist a new campaign."""
     logger.debug("Creating campaign %s", name)
-    campaign = Campaign(name=name, description=description)
+    campaign = Campaign(name=name, description=description, dm_id=dm_id)
     db.add(campaign)
     db.commit()
     db.refresh(campaign)
@@ -89,6 +94,28 @@ def update_campaign(db: Session, campaign_id: int, **fields) -> Campaign:
     db.commit()
     db.refresh(campaign)
     return campaign
+
+
+def add_user_to_campaign(db: Session, campaign_id: int, user_id: int) -> None:
+    """Associate a user with a campaign."""
+    logger.debug("Adding user %s to campaign %s", user_id, campaign_id)
+    campaign = db.get(Campaign, campaign_id)
+    user = db.get(User, user_id)
+    if campaign is None or user is None:
+        raise ValueError("Campaign or user not found")
+    campaign.members.append(user)
+    db.commit()
+
+
+def list_campaigns(db: Session, user_id: int | None = None) -> list[Campaign]:
+    """Return campaigns, optionally filtered by user membership or DM."""
+    logger.debug("Listing campaigns for user %s", user_id)
+    query = db.query(Campaign)
+    if user_id is not None:
+        query = query.join(Campaign.members, isouter=True).filter(
+            (Campaign.dm_id == user_id) | (User.id == user_id)
+        ).distinct()
+    return query.all()
 
 
 def create_note(

@@ -12,6 +12,8 @@ from .controllers import (
     update_user,
     create_campaign,
     update_campaign,
+    add_user_to_campaign,
+    list_campaigns,
     create_note,
     update_note,
     list_notes,
@@ -123,11 +125,17 @@ def api_update_user(
 def api_create_campaign(
     name: str = Form(...),
     description: str | None = Form(None),
+    dm_id: int | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("POST /campaigns name=%s", name)
-    campaign = create_campaign(db, name=name, description=description)
-    return {"id": campaign.id, "name": campaign.name, "description": campaign.description}
+    campaign = create_campaign(db, name=name, description=description, dm_id=dm_id)
+    return {
+        "id": campaign.id,
+        "name": campaign.name,
+        "description": campaign.description,
+        "dm_id": campaign.dm_id,
+    }
 
 
 @app.put("/campaigns/{campaign_id}", response_model=dict)
@@ -135,6 +143,7 @@ def api_update_campaign(
     campaign_id: int,
     name: str | None = Form(None),
     description: str | None = Form(None),
+    dm_id: int | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("PUT /campaigns/%s", campaign_id)
@@ -143,11 +152,47 @@ def api_update_campaign(
         fields["name"] = name
     if description is not None:
         fields["description"] = description
+    if dm_id is not None:
+        fields["dm_id"] = dm_id
     try:
         campaign = update_campaign(db, campaign_id, **fields)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc))
-    return {"id": campaign.id, "name": campaign.name, "description": campaign.description}
+    return {
+        "id": campaign.id,
+        "name": campaign.name,
+        "description": campaign.description,
+        "dm_id": campaign.dm_id,
+    }
+
+
+@app.post("/campaigns/{campaign_id}/join", response_model=dict)
+def api_join_campaign(
+    campaign_id: int,
+    user_id: int = Form(...),
+    db: Session = Depends(get_db),
+):
+    logger.info("POST /campaigns/%s/join user=%s", campaign_id, user_id)
+    try:
+        add_user_to_campaign(db, campaign_id, user_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    return {"status": "joined"}
+
+
+@app.get("/campaigns", response_model=list[dict])
+def api_list_campaigns(user_id: int | None = None, db: Session = Depends(get_db)):
+    logger.info("GET /campaigns user_id=%s", user_id)
+    campaigns = list_campaigns(db, user_id=user_id)
+    return [
+        {
+            "id": c.id,
+            "name": c.name,
+            "description": c.description,
+            "dm_id": c.dm_id,
+        }
+        for c in campaigns
+    ]
 
 
 @app.post("/notes", response_model=dict)
