@@ -1,12 +1,5 @@
 const apiUrl = 'http://localhost:8001';
 
-function toggleTheme() {
-  const body = document.body;
-  body.classList.toggle('dark');
-  body.classList.toggle('light');
-}
-
-document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
 
 async function register() {
   const username = document.getElementById('reg-username').value;

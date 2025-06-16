@@ -8,12 +8,6 @@ function ensureLogin() {
   return userId;
 }
 
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
-}
-
-document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
 
 async function loadCampaigns() {
   const userId = ensureLogin();

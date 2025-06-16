@@ -24,13 +24,6 @@ function getCampaignId() {
   return cid;
 }
 
-function toggleTheme() {
-  const body = document.body;
-  body.classList.toggle('dark');
-  body.classList.toggle('light');
-}
-
-document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
 
 let editingNoteId = null;
 
