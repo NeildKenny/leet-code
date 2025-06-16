@@ -10,6 +10,10 @@ The backend starts on http://localhost:8001 by default.
 
 Logs are printed to the console at INFO level to aid debugging.
 
+Cross-origin requests are allowed so the JavaScript frontend can call the API
+from another origin (for example when opening the HTML files directly from
+disk).
+
 Create the database tables using::
 
     from backend import create_tables

@@ -1,6 +1,7 @@
 """HTTP API endpoints for the DnD Notebook backend."""
 
 from fastapi import FastAPI, HTTPException, Depends, Form
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from datetime import date
 import logging
@@ -22,6 +23,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="DnD Notebook API")
+
+# Allow cross-origin requests so the browser-based frontend can call the API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_db() -> Session:
