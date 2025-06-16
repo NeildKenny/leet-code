@@ -3,6 +3,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from datetime import date
+import logging
 
 from .db import SessionLocal, create_tables
 from .controllers import (
@@ -17,6 +18,9 @@ from .controllers import (
 )
 from .models import User, Campaign, Note
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = FastAPI(title="DnD Notebook API")
 
 
@@ -30,6 +34,7 @@ def get_db() -> Session:
 
 @app.on_event("startup")
 def on_startup() -> None:
+    logger.info("Creating database tables")
     create_tables()
 
 
@@ -40,6 +45,7 @@ def api_create_user(
     profile_picture_url: str | None = None,
     db: Session = Depends(get_db),
 ):
+    logger.info("POST /users user=%s", username)
     user = create_user(
         db,
         username=username,
@@ -57,6 +63,7 @@ def api_register(
     db: Session = Depends(get_db),
 ):
     """Alias endpoint for user registration."""
+    logger.info("POST /register user=%s", username)
     user = create_user(
         db,
         username=username,
@@ -68,6 +75,7 @@ def api_register(
 
 @app.post("/login", response_model=dict)
 def api_login(username: str, password: str, db: Session = Depends(get_db)):
+    logger.info("POST /login user=%s", username)
     user = authenticate_user(db, username=username, password=password)
     if user is None:
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -82,6 +90,7 @@ def api_update_user(
     profile_picture_url: str | None = None,
     db: Session = Depends(get_db),
 ):
+    logger.info("PUT /users/%s", user_id)
     fields = {}
     if username is not None:
         fields["username"] = username
@@ -98,12 +107,14 @@ def api_update_user(
 
 @app.post("/campaigns", response_model=dict)
 def api_create_campaign(name: str, description: str | None = None, db: Session = Depends(get_db)):
+    logger.info("POST /campaigns name=%s", name)
     campaign = create_campaign(db, name=name, description=description)
     return {"id": campaign.id, "name": campaign.name, "description": campaign.description}
 
 
 @app.put("/campaigns/{campaign_id}", response_model=dict)
 def api_update_campaign(campaign_id: int, name: str | None = None, description: str | None = None, db: Session = Depends(get_db)):
+    logger.info("PUT /campaigns/%s", campaign_id)
     fields = {}
     if name is not None:
         fields["name"] = name
@@ -130,6 +141,7 @@ def api_create_note(
     category: str | None = None,
     db: Session = Depends(get_db),
 ):
+    logger.info("POST /notes campaign=%s author=%s", campaign_id, author_id)
     note = create_note(
         db,
         campaign_id=campaign_id,
@@ -159,6 +171,7 @@ def api_update_note(
     category: str | None = None,
     db: Session = Depends(get_db),
 ):
+    logger.info("PUT /notes/%s", note_id)
     fields = {}
     if title is not None:
         fields["title"] = title
@@ -186,6 +199,7 @@ def api_update_note(
 @app.get("/notes", response_model=list[dict])
 def api_list_notes(campaign_id: int | None = None, db: Session = Depends(get_db)):
     """Return all notes, optionally filtered by campaign ID."""
+    logger.info("GET /notes campaign=%s", campaign_id)
     notes = list_notes(db, campaign_id=campaign_id)
     return [
         {

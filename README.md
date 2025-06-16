@@ -8,6 +8,8 @@ Run the server with::
 
 The backend starts on http://localhost:8001 by default.
 
+Logs are printed to the console at INFO level to aid debugging.
+
 Create the database tables using::
 
     from backend import create_tables
