@@ -5,6 +5,22 @@ function log(message) {
   out.textContent += message + '\n';
 }
 
+function ensureLogin() {
+  const userId = sessionStorage.getItem('user_id');
+  if (!userId) {
+    window.location.href = 'login.html';
+  }
+  return userId;
+}
+
+function toggleTheme() {
+  const body = document.body;
+  body.classList.toggle('dark');
+  body.classList.toggle('light');
+}
+
+document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
+
 async function createUser() {
   const username = document.getElementById('user-name').value;
   const password = document.getElementById('user-password').value;
@@ -76,6 +92,8 @@ async function loadNotes() {
     list.appendChild(item);
   });
 }
+
+ensureLogin();
 
 document.getElementById('create-user').addEventListener('click', createUser);
 document.getElementById('create-campaign').addEventListener('click', createCampaign);

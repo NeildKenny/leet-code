@@ -13,6 +13,7 @@ from .controllers import (
     create_note,
     update_note,
     list_notes,
+    authenticate_user,
 )
 from .models import User, Campaign, Note
 
@@ -45,6 +46,14 @@ def api_create_user(
         hashed_password=password,
         profile_picture_url=profile_picture_url,
     )
+    return {"id": user.id, "username": user.username}
+
+
+@app.post("/login", response_model=dict)
+def api_login(username: str, password: str, db: Session = Depends(get_db)):
+    user = authenticate_user(db, username=username, password=password)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
     return {"id": user.id, "username": user.username}
 
 

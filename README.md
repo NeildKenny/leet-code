@@ -1,25 +1,16 @@
 # DnD Notebook Backend
 
-This project provides a backend for a collaborative Dungeons & Dragons note taking application.
-It uses a simple SQLite database via SQLAlchemy for storage and defines models for campaigns,
-users and notes. Notes may include an image URL and users can have profile
-pictures associated with their accounts. Notes also track session information
-(`session_name`, `session_date`, `session_number`) and a `category` field.
+This project provides a backend for a collaborative Dungeons & Dragons note taking application. It uses a simple SQLite database via SQLAlchemy and exposes an HTTP API with FastAPI. Notes can include optional images and session details while users may have profile pictures.
 
-An HTTP API is provided using FastAPI. Run the server with::
+Run the server with::
 
     uvicorn backend.views:app --reload
 
-To create the database tables run the following in a Python shell:
+Create the database tables using::
 
-```python
-from backend import create_tables
-create_tables()
-```
+    from backend import create_tables
+    create_tables()
 
 ## Frontend
 
-A minimal JavaScript frontend lives in the `frontend` directory. Start the
-backend server and then open `frontend/index.html` in your browser. The page
-offers simple forms for creating users, campaigns and notes through the HTTP
-API. A "Load Notes" button retrieves stored notes and displays them on the page.
+Open `frontend/login.html` in your browser after starting the backend. The login page will authenticate a user and redirect to `notes.html` where you can create campaigns and notes. Both pages include a theme toggle for light or dark mode.
