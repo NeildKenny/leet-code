@@ -18,7 +18,8 @@ USER_ID=$(jq -r '.id' /tmp/user.json)
 # Create a campaign with a short description
 curl -s -X POST "$API/campaigns" \
   -d "name=My Campaign" \
-  -d "description=Sample campaign for the demo" |
+  -d "description=Sample campaign for the demo" \
+  -d "dm_id=$USER_ID" |
   tee /tmp/campaign.json
 
 CAMPAIGN_ID=$(jq -r '.id' /tmp/campaign.json)

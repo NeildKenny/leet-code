@@ -1,6 +1,6 @@
 # DnD Notebook Backend
 
-This project provides a backend for a collaborative Dungeons & Dragons note taking application. It uses a simple SQLite database via SQLAlchemy and exposes an HTTP API with FastAPI. Notes can include optional images and session details while users may have profile pictures. Campaigns belong to a Dungeon Master (DM) and can have many player members. Each note references both its author and campaign.
+This project provides a backend for a collaborative Dungeons & Dragons note taking application. It uses a simple SQLite database via SQLAlchemy and exposes an HTTP API with FastAPI. Notes can include optional images and session details while users may have profile pictures. Campaigns belong to a Dungeon Master (DM) and can have many player members. Each note references both its author and campaign. When a campaign is created the requester automatically becomes the DM and is added to the member list.
 
 Run the server with::
 
@@ -32,7 +32,7 @@ Once the environment is created, you can start the service using
 ## API Testing
 
 Run `test_api.sh` to exercise the HTTP endpoints using `curl`. The script
-registers a demo user, creates a campaign, posts a note and finally lists
+registers a demo user, creates a campaign (automatically making that user the DM), posts a note and finally lists
 all notes. Sample payloads are included directly in the curl commands so
 you can see exactly what data is sent. It requires `jq` for parsing JSON
 output::

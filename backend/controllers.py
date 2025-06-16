@@ -74,9 +74,18 @@ def create_campaign(
     description: str | None = None,
     dm_id: int | None = None,
 ) -> Campaign:
-    """Create and persist a new campaign."""
+    """Create and persist a new campaign.
+
+    If a ``dm_id`` is provided the corresponding user becomes the campaign's
+    Dungeon Master and is automatically added to the member list.
+    """
     logger.debug("Creating campaign %s", name)
     campaign = Campaign(name=name, description=description, dm_id=dm_id)
+    if dm_id is not None:
+        dm = db.get(User, dm_id)
+        if dm is None:
+            raise ValueError("DM user not found")
+        campaign.members.append(dm)
     db.add(campaign)
     db.commit()
     db.refresh(campaign)
