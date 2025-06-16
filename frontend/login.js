@@ -6,12 +6,7 @@ function toggleTheme() {
   body.classList.toggle('light');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.createElement('button');
-  btn.textContent = 'Toggle Theme';
-  btn.addEventListener('click', toggleTheme);
-  document.body.prepend(btn);
-});
+document.getElementById('toggle-theme').addEventListener('click', toggleTheme);
 
 async function login() {
   const username = document.getElementById('login-username').value;

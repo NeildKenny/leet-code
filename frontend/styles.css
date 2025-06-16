@@ -1,17 +1,18 @@
 :root {
-  --bg-color-light: #ffffff;
-  --text-color-light: #000000;
-  --bg-color-dark: #222222;
-  --text-color-dark: #f0f0f0;
+  --bg-color-light: #f9f9f9;
+  --text-color-light: #222222;
+  --bg-color-dark: #1e1e1e;
+  --text-color-dark: #eeeeee;
+  --accent-color: #6200ee;
 }
 
 body.light {
-  background-color: var(--bg-color-light);
+  background: linear-gradient(to bottom, #ffffff, var(--bg-color-light));
   color: var(--text-color-light);
 }
 
 body.dark {
-  background-color: var(--bg-color-dark);
+  background: linear-gradient(to bottom, #000000, var(--bg-color-dark));
   color: var(--text-color-dark);
 }
 
@@ -19,6 +20,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 1rem;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 header {
@@ -30,16 +32,44 @@ header {
 .container {
   max-width: 400px;
   margin: 2rem auto;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .container {
+  background: rgba(0, 0, 0, 0.4);
 }
 
 input, textarea, button {
   padding: 0.5rem;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 button {
   cursor: pointer;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #3700b3;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
