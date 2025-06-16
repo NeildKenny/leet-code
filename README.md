@@ -43,4 +43,4 @@ Create a new account by sending a POST request to `/register` (or `/users`) with
 
 ## Frontend
 
-Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the new registration page to create an account. After logging in you will be redirected to `notes.html` where you can create campaigns and notes. All pages include a theme toggle for light or dark mode.
+Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the registration page to create an account. After either logging in or completing registration you are taken to `notes.html` where you can create campaigns and notes. All pages include a theme toggle for light or dark mode.

@@ -25,8 +25,9 @@ async function register() {
     body: params
   });
   if (response.ok) {
-    alert('User registered');
-    window.location.href = 'login.html';
+    const data = await response.json();
+    sessionStorage.setItem('user_id', data.id);
+    window.location.href = 'notes.html';
   } else {
     const data = await response.json();
     alert('Registration failed: ' + (data.detail || response.status));
