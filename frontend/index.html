@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Notebook Frontend</title>
+</head>
+<body>
+    <h1>DnD Notebook</h1>
+
+    <section>
+        <h2>Create User</h2>
+        <input id="user-name" placeholder="Username">
+        <input id="user-password" placeholder="Password" type="password">
+        <input id="user-picture" placeholder="Profile Picture URL">
+        <button id="create-user">Create User</button>
+    </section>
+
+    <section>
+        <h2>Create Campaign</h2>
+        <input id="campaign-name" placeholder="Name">
+        <input id="campaign-description" placeholder="Description">
+        <button id="create-campaign">Create Campaign</button>
+    </section>
+
+    <section>
+        <h2>Create Note</h2>
+        <input id="note-campaign" placeholder="Campaign ID" type="number">
+        <input id="note-author" placeholder="Author ID" type="number">
+        <input id="note-title" placeholder="Title">
+        <textarea id="note-body" placeholder="Body"></textarea>
+        <input id="note-image" placeholder="Image URL">
+        <input id="note-session-name" placeholder="Session Name">
+        <input id="note-session-date" type="date" placeholder="Session Date">
+        <input id="note-session-number" type="number" placeholder="Session Number">
+        <input id="note-category" placeholder="Category">
+        <label><input id="note-private" type="checkbox"> Private</label>
+        <button id="create-note">Create Note</button>
+    </section>
+
+    <section>
+        <h2>Notes</h2>
+        <button id="load-notes">Load Notes</button>
+        <ul id="notes-list"></ul>
+    </section>
+
+    <pre id="output"></pre>
+
+    <script src="script.js"></script>
+</body>
+</html>
