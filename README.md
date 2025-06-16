@@ -6,6 +6,8 @@ Run the server with::
 
     ./start.sh
 
+The backend starts on http://localhost:8001 by default.
+
 Create the database tables using::
 
     from backend import create_tables

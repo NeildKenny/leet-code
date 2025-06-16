@@ -9,4 +9,4 @@ if [ -f "venv/bin/activate" ]; then
     source venv/bin/activate
 fi
 
-exec uvicorn backend.views:app --reload
+exec uvicorn backend.views:app --reload --port 8001
