@@ -27,7 +27,9 @@ Once the environment is created, you can start the service using
 
 Run `test_api.sh` to exercise the HTTP endpoints using `curl`. The script
 registers a demo user, creates a campaign, posts a note and finally lists
-all notes. It requires `jq` for parsing JSON output::
+all notes. Sample payloads are included directly in the curl commands so
+you can see exactly what data is sent. It requires `jq` for parsing JSON
+output::
 
     sudo apt-get install -y jq
     ./test_api.sh
