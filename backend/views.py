@@ -43,7 +43,24 @@ def api_create_user(
     user = create_user(
         db,
         username=username,
-        hashed_password=password,
+        password=password,
+        profile_picture_url=profile_picture_url,
+    )
+    return {"id": user.id, "username": user.username}
+
+
+@app.post("/register", response_model=dict)
+def api_register(
+    username: str,
+    password: str,
+    profile_picture_url: str | None = None,
+    db: Session = Depends(get_db),
+):
+    """Alias endpoint for user registration."""
+    user = create_user(
+        db,
+        username=username,
+        password=password,
         profile_picture_url=profile_picture_url,
     )
     return {"id": user.id, "username": user.username}

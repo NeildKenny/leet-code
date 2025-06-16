@@ -2,29 +2,41 @@
 
 from datetime import date
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
 from .models import User, Campaign, Note
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def hash_password(password: str) -> str:
+    """Return a bcrypt hash for the given password."""
+    return pwd_context.hash(password)
+
+
+def verify_password(password: str, hashed: str) -> bool:
+    """Verify a password against an existing hash."""
+    return pwd_context.verify(password, hashed)
 
 
 def authenticate_user(db: Session, username: str, password: str) -> User | None:
     """Return a user if the credentials match."""
-    return (
-        db.query(User)
-        .filter(User.username == username, User.hashed_password == password)
-        .first()
-    )
+    user = db.query(User).filter(User.username == username).first()
+    if user and verify_password(password, user.hashed_password):
+        return user
+    return None
 
 
 def create_user(
     db: Session,
     username: str,
-    hashed_password: str,
+    password: str,
     profile_picture_url: str | None = None,
 ) -> User:
     """Create and persist a new user."""
     user = User(
         username=username,
-        hashed_password=hashed_password,
+        hashed_password=hash_password(password),
         profile_picture_url=profile_picture_url,
     )
     db.add(user)
@@ -39,6 +51,8 @@ def update_user(db: Session, user_id: int, **fields) -> User:
     if user is None:
         raise ValueError("User not found")
     for key, value in fields.items():
+        if key == "hashed_password":
+            value = hash_password(value)
         setattr(user, key, value)
     db.commit()
     db.refresh(user)

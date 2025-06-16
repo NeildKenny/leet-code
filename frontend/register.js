@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:8000';
+const apiUrl = 'http://localhost:8001';
 
 function toggleTheme() {
   const body = document.body;
@@ -19,7 +19,7 @@ async function register() {
   const picture = document.getElementById('reg-picture').value;
   const params = new URLSearchParams({username, password});
   if (picture) params.append('profile_picture_url', picture);
-  const response = await fetch(`${apiUrl}/users`, {
+  const response = await fetch(`${apiUrl}/register`, {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: params

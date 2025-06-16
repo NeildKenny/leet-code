@@ -23,6 +23,11 @@ all dependencies on Linux Mint::
 Once the environment is created, you can start the service using
 `start.sh` as shown above.
 
+## Registration
+
+Create a new account by sending a POST request to `/register` (or `/users`) with
+`username` and `password` parameters. Passwords are stored using bcrypt hashes.
+
 ## Frontend
 
 Open `frontend/login.html` in your browser after starting the backend. From there you can navigate to the new registration page to create an account. After logging in you will be redirected to `notes.html` where you can create campaigns and notes. All pages include a theme toggle for light or dark mode.

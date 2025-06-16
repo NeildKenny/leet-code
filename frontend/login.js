@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:8000';
+const apiUrl = 'http://localhost:8001';
 
 function toggleTheme() {
   const body = document.body;

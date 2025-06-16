@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:8000';
+const apiUrl = 'http://localhost:8001';
 
 function log(message) {
   const out = document.getElementById('output');
