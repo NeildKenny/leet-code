@@ -15,6 +15,6 @@ python3 -m venv venv
 # Activate and install dependencies
 source venv/bin/activate
 pip install --upgrade pip
-pip install fastapi==0.110.* sqlalchemy==2.* uvicorn[standard]
+pip install fastapi==0.110.* sqlalchemy==2.* passlib==1.7.* uvicorn[standard] python-multipart
 
 echo "Environment setup complete. Activate it with 'source venv/bin/activate'."

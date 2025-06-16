@@ -1,6 +1,6 @@
 """HTTP API endpoints for the DnD Notebook backend."""
 
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Form
 from sqlalchemy.orm import Session
 from datetime import date
 import logging
@@ -40,9 +40,9 @@ def on_startup() -> None:
 
 @app.post("/users", response_model=dict)
 def api_create_user(
-    username: str,
-    password: str,
-    profile_picture_url: str | None = None,
+    username: str = Form(...),
+    password: str = Form(...),
+    profile_picture_url: str | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("POST /users user=%s", username)
@@ -57,9 +57,9 @@ def api_create_user(
 
 @app.post("/register", response_model=dict)
 def api_register(
-    username: str,
-    password: str,
-    profile_picture_url: str | None = None,
+    username: str = Form(...),
+    password: str = Form(...),
+    profile_picture_url: str | None = Form(None),
     db: Session = Depends(get_db),
 ):
     """Alias endpoint for user registration."""
@@ -74,7 +74,11 @@ def api_register(
 
 
 @app.post("/login", response_model=dict)
-def api_login(username: str, password: str, db: Session = Depends(get_db)):
+def api_login(
+    username: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_db),
+):
     logger.info("POST /login user=%s", username)
     user = authenticate_user(db, username=username, password=password)
     if user is None:
@@ -85,9 +89,9 @@ def api_login(username: str, password: str, db: Session = Depends(get_db)):
 @app.put("/users/{user_id}", response_model=dict)
 def api_update_user(
     user_id: int,
-    username: str | None = None,
-    password: str | None = None,
-    profile_picture_url: str | None = None,
+    username: str | None = Form(None),
+    password: str | None = Form(None),
+    profile_picture_url: str | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("PUT /users/%s", user_id)
@@ -106,14 +110,23 @@ def api_update_user(
 
 
 @app.post("/campaigns", response_model=dict)
-def api_create_campaign(name: str, description: str | None = None, db: Session = Depends(get_db)):
+def api_create_campaign(
+    name: str = Form(...),
+    description: str | None = Form(None),
+    db: Session = Depends(get_db),
+):
     logger.info("POST /campaigns name=%s", name)
     campaign = create_campaign(db, name=name, description=description)
     return {"id": campaign.id, "name": campaign.name, "description": campaign.description}
 
 
 @app.put("/campaigns/{campaign_id}", response_model=dict)
-def api_update_campaign(campaign_id: int, name: str | None = None, description: str | None = None, db: Session = Depends(get_db)):
+def api_update_campaign(
+    campaign_id: int,
+    name: str | None = Form(None),
+    description: str | None = Form(None),
+    db: Session = Depends(get_db),
+):
     logger.info("PUT /campaigns/%s", campaign_id)
     fields = {}
     if name is not None:
@@ -129,16 +142,16 @@ def api_update_campaign(campaign_id: int, name: str | None = None, description: 
 
 @app.post("/notes", response_model=dict)
 def api_create_note(
-    campaign_id: int,
-    author_id: int,
-    title: str,
-    body: str,
-    image_url: str | None = None,
-    is_private: bool = False,
-    session_name: str | None = None,
-    session_date: str | None = None,
-    session_number: int | None = None,
-    category: str | None = None,
+    campaign_id: int = Form(...),
+    author_id: int = Form(...),
+    title: str = Form(...),
+    body: str = Form(...),
+    image_url: str | None = Form(None),
+    is_private: bool = Form(False),
+    session_name: str | None = Form(None),
+    session_date: str | None = Form(None),
+    session_number: int | None = Form(None),
+    category: str | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("POST /notes campaign=%s author=%s", campaign_id, author_id)
@@ -161,14 +174,14 @@ def api_create_note(
 @app.put("/notes/{note_id}", response_model=dict)
 def api_update_note(
     note_id: int,
-    title: str | None = None,
-    body: str | None = None,
-    image_url: str | None = None,
-    is_private: bool | None = None,
-    session_name: str | None = None,
-    session_date: str | None = None,
-    session_number: int | None = None,
-    category: str | None = None,
+    title: str | None = Form(None),
+    body: str | None = Form(None),
+    image_url: str | None = Form(None),
+    is_private: bool | None = Form(None),
+    session_name: str | None = Form(None),
+    session_date: str | None = Form(None),
+    session_number: int | None = Form(None),
+    category: str | None = Form(None),
     db: Session = Depends(get_db),
 ):
     logger.info("PUT /notes/%s", note_id)
