@@ -4,12 +4,22 @@ This project provides a backend for a collaborative Dungeons & Dragons note taki
 
 Run the server with::
 
-    uvicorn backend.views:app --reload
+    ./start.sh
 
 Create the database tables using::
 
     from backend import create_tables
     create_tables()
+
+## Setup
+
+Use `setup.sh` to prepare a Python virtual environment and install
+all dependencies on Linux Mint::
+
+    ./setup.sh
+
+Once the environment is created, you can start the service using
+`start.sh` as shown above.
 
 ## Frontend
 
