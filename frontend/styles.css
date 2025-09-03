@@ -1,0 +1,134 @@
+:root {
+  --bg-color-light: #f9f9f9;
+  --text-color-light: #222222;
+  --bg-color-dark: #1e1e1e;
+  --text-color-dark: #eeeeee;
+  --accent-color: #6200ee;
+}
+
+body.light {
+  background: linear-gradient(to bottom, #ffffff, var(--bg-color-light));
+  color: var(--text-color-light);
+}
+
+body.dark {
+  background: linear-gradient(to bottom, #000000, var(--bg-color-dark));
+  color: var(--text-color-dark);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .container {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+input, textarea, button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #3700b3;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 180px;
+  padding: 1rem;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s;
+}
+
+.nav.collapsed {
+  transform: translateX(-100%);
+}
+
+body.dark .nav {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+body.with-nav {
+  margin-left: 190px;
+  transition: margin-left 0.3s;
+}
+
+body.nav-collapsed {
+  margin-left: 0;
+}
+
+.nav-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+
+.nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nav li {
+  margin: 0.5rem 0;
+}
+
+.nav a {
+  color: inherit;
+}
+

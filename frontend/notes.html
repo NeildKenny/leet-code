@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Notebook</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light">
+    <script src="nav.js"></script>
+    <script src="theme.js"></script>
+    <header>
+        <h1>DnD Notebook</h1>
+        <button id="toggle-theme">🌙</button>
+    </header>
+
+
+    <section>
+        <h2>Create Note</h2>
+        <input id="note-title" placeholder="Title">
+        <textarea id="note-body" placeholder="Body"></textarea>
+        <input id="note-image" placeholder="Image URL">
+        <input id="note-session-name" placeholder="Session Name">
+        <input id="note-session-date" type="date">
+        <input id="note-session-number" type="number" placeholder="Session Number">
+        <input id="note-category" placeholder="Category">
+        <label><input id="note-private" type="checkbox"> Private</label>
+        <button id="create-note">Create Note</button>
+    </section>
+
+    <section>
+        <h2>Notes</h2>
+        <button id="load-notes">Load Notes</button>
+        <ul id="notes-list"></ul>
+    </section>
+
+    <pre id="output"></pre>
+
+    <script src="notes.js"></script>
+</body>
+</html>
